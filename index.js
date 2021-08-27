@@ -5,7 +5,7 @@ import fetch from 'isomorphic-fetch'
 import { parseFragment } from 'parse5'
 import { fromParse5 } from 'hast-util-from-parse5'
 
-export default () => {
+export default (options = {}) => {
   // make regexes for all endpoints/schemes
   for (const provider of providers) {
     provider.matchers = provider.endpoints.map(endpoint => {
@@ -29,7 +29,7 @@ export default () => {
     return {}
   }
 
-  return async (tree, file) => {
+  return async (tree, file, ...args) => {
     // List of `[paragraph, endpoint, url]`s.
     const pairs = []
 
@@ -37,20 +37,22 @@ export default () => {
       // A link on its own specifically in a paragraph, with text=href:
       if (element.tagName === 'a' && parent && parent.type === 'element' && parent.tagName === 'p' && parent.children.length === 1 && element.properties.href === element.children[0].value) {
         const url = element.properties.href
-        const { endpoint } = findProviderAndEndpoint(url)
+        const { endpoint, provider } = findProviderAndEndpoint(url)
 
         // Known endpoint.
         if (endpoint) {
-          pairs.push([parent, endpoint, url])
+          pairs.push([parent, endpoint, url, provider])
           return SKIP
         }
       }
     })
 
     // get info from provider for embed, and swap children out for that
-    await Promise.all(pairs.map(async ([element, endpoint, url]) => {
-      const oembed = await (await fetch(`${endpoint.url.replace(/\{format\}/g, 'json')}?url=${url}`)).json()
-      if (oembed) {
+    await Promise.all(pairs.map(async ([element, endpoint, url, provider]) => {
+      const properties = { ...options[provider.provider_name], url, format: 'json' }
+      const u = endpoint.url.replace(/\{format\}/g, 'json') + '?' + (new URLSearchParams(properties)).toString()
+      const oembed = await (await fetch(u)).json()
+      if (oembed && oembed.html) {
         element.children = fromParse5(parseFragment(oembed.html), tree).children
       }
     }))

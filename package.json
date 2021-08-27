@@ -12,6 +12,8 @@
     "test": "NODE_OPTIONS='--no-warnings --experimental-vm-modules' npx jest",
     "build": "microbundle",
     "get:providers": "node tools/get_providers.js",
+    "site": "node --no-warnings --experimental-json-modules ./tools/build_site.js",
+    "testdoc": "node --no-warnings --experimental-json-modules ./tools/build_test.js",
     "prepublishOnly": "npm run build"
   },
   "keywords": [],

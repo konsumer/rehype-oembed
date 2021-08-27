@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`full doc 1`] = `
-"<h2>Twitter</h2>
+"<h1>Remark oEmbed</h1>
+<p>This is a library to add nice embeds for links, when processing HTML or markdown. You can find the library <a href=\\"https://github.com/konsumer/rehype-oembed\\">here on github</a>.</p>
+<p>This is a basic demo-page.</p>
+<h2>Twitter</h2>
 <p>This is a tweet:</p>
 <p><blockquote class=\\"twitter-tweet\\"><p lang=\\"en\\" dir=\\"ltr\\">bad children are sent down \\"the slide of no return\\" <a href=\\"https://t.co/GLxna9yeVT\\">pic.twitter.com/GLxna9yeVT</a></p>— Lil Bit 🌈 (@LizerReal) <a href=\\"https://twitter.com/LizerReal/status/1430945065334104065?ref_src=twsrc%5Etfw\\">August 26, 2021</a></blockquote>
 <script async src=\\"https://platform.twitter.com/widgets.js\\" charset=\\"utf-8\\"></script>
@@ -14,5 +17,12 @@ exports[`full doc 1`] = `
 <p>This is a youtube video:</p>
 <p><iframe width=\\"200\\" height=\\"150\\" src=\\"https://www.youtube.com/embed/K-281doxOMc?feature=oembed\\" frameborder=\\"0\\" allow=\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\\" allowfullscreen></iframe></p>
 <p><a href=\\"https://www.youtube.com/watch?v=K-281doxOMc\\">this should not match</a></p>
-<p>And neither should this: <a href=\\"https://www.youtube.com/watch?v=K-281doxOMc\\">https://www.youtube.com/watch?v=K-281doxOMc</a></p>"
+<p>And neither should this: <a href=\\"https://www.youtube.com/watch?v=K-281doxOMc\\">https://www.youtube.com/watch?v=K-281doxOMc</a></p>
+<h2>Instagram</h2>
+<p>Lil Bub is so stinkin' cute:</p>
+<p><a href=\\"https://www.instagram.com/p/CSNAXbgABKw\\">https://www.instagram.com/p/CSNAXbgABKw</a></p>
+<p>Unfortunately, Instagram requires a facebook-app + instagram client-id &#x26; approval, which is a pain.</p>
+<h2>Flickr</h2>
+<p><a data-flickr-embed=\\"true\\" href=\\"https://www.flickr.com/photos/48904813@N04/4480686437/\\" title=\\"cute cat wallpaper04 by nicemonday, on Flickr\\"><img src=\\"https://live.staticflickr.com/4013/4480686437_2d0c7018be_b.jpg\\" width=\\"1024\\" height=\\"768\\" alt=\\"cute cat wallpaper04\\"></a><script async src=\\"https://embedr.flickr.com/assets/client-code.js\\" charset=\\"utf-8\\"></script></p>
+<p>That is one cute cat!</p>"
 `;
