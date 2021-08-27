@@ -35,7 +35,7 @@ Here is an example of parsing a markdown file to HTML, and adding the embeds:
 
 ```js
 import oembed from '@konsumer/rehype-oembed'
-import { readSync } from 'to-vfile'
+import { promises as fs } from 'fs'
 import { reporter } from 'vfile-reporter'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
@@ -43,16 +43,16 @@ import remarkGfm from 'remark-gfm'
 import remarkRehype from 'remark-rehype'
 import remarkStringify from 'rehype-stringify'
 
-(async () => {
-const contents = await unified()
+const markdownToHtml = async file => unified()
   .use(remarkParse)
   .use(remarkRehype)
   .use(remarkGfm)
   .use(oembed)
   .use(remarkStringify)
-  .process(readSync('test.md'))
-console.log(contents)
-})()
+  .process(await fs.readFile(file))
+
+markdownToHtml()
+  .then(console.log)
 ```
 
 ## thanks
