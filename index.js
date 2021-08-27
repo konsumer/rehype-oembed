@@ -4,7 +4,7 @@ import escapRe from 'escape-string-regexp'
 import { isUri } from 'valid-url'
 import fetch from 'isomorphic-fetch'
 
-import { parse } from 'parse5'
+import { parseFragment } from 'parse5'
 import { fromParse5 } from 'hast-util-from-parse5'
 
 export default () => {
@@ -41,9 +41,9 @@ export default () => {
           // jam the embed-data into the node
           const oembed = await (await fetch(`${endpoint.url.replace(/\{format\}/g, 'json')}?url=${n.value}`)).json()
           if (oembed) {
-            const hast = fromParse5(parse(oembed.html), tree)
-            hast.oembed = oembed
-            console.log(hast.children[0].children[1].children)
+            const hast = fromParse5(parseFragment(oembed.html), tree)
+            // TODO: this is the embed HTML. What do I do with it?
+            console.log(JSON.stringify(hast, null, 2))
           }
         }
       }
