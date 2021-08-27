@@ -34,12 +34,13 @@ export default () => {
   // this does the actual replacement in the AST
   return async (tree, file) => {
     const nodes = selectAll('paragraph text', tree)
-    await Promise.all(nodes.map(async n => {
-      if (isUri(n.value)) {
-        const { endpoint } = findProviderAndEndpoint(n.value)
+    await Promise.all(nodes.map(async (node) => {
+      console.log(node)
+      if (isUri(node.value)) {
+        const { endpoint } = findProviderAndEndpoint(node.value)
         if (endpoint) {
           // jam the embed-data into the node
-          const oembed = await (await fetch(`${endpoint.url.replace(/\{format\}/g, 'json')}?url=${n.value}`)).json()
+          const oembed = await (await fetch(`${endpoint.url.replace(/\{format\}/g, 'json')}?url=${node.value}`)).json()
           if (oembed) {
             const hast = fromParse5(parseFragment(oembed.html), tree)
             // TODO: this is the embed HTML. What do I do with it?
