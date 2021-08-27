@@ -1,9 +1,7 @@
 import providers from './providers.json'
-import { selectAll } from 'unist-util-select'
+import { visit, SKIP } from 'unist-util-visit'
 import escapRe from 'escape-string-regexp'
-import { isUri } from 'valid-url'
 import fetch from 'isomorphic-fetch'
-
 import { parseFragment } from 'parse5'
 import { fromParse5 } from 'hast-util-from-parse5'
 
@@ -12,7 +10,7 @@ export default () => {
   for (const provider of providers) {
     provider.matchers = provider.endpoints.map(endpoint => {
       endpoint.schemes = endpoint?.schemes || []
-      return endpoint.schemes.map(pattern => new RegExp(escapRe(pattern).replace(/\\\*/g, '(.+)')))
+      return endpoint.schemes.map(pattern => new RegExp('^' + escapRe(pattern).replace(/\\\*/g, '(.+)') + '$'))
     })
   }
 
@@ -31,24 +29,32 @@ export default () => {
     return {}
   }
 
-  // this does the actual replacement in the AST
   return async (tree, file) => {
-    const nodes = selectAll('paragraph text', tree)
-    await Promise.all(nodes.map(async (node) => {
-      console.log(node)
-      if (isUri(node.value)) {
-        const { endpoint } = findProviderAndEndpoint(node.value)
+    // List of `[paragraph, endpoint, url]`s.
+    const pairs = []
+
+    visit(tree, 'element', (element, _, parent) => {
+      // A link on its own specifically in a paragraph, with text=href:
+      if (element.tagName === 'a' && parent && parent.type === 'element' && parent.tagName === 'p' && parent.children.length === 1 && element.properties.href === element.children[0].value) {
+        const url = element.properties.href
+        const { endpoint } = findProviderAndEndpoint(url)
+
+        // Known endpoint.
         if (endpoint) {
-          // jam the embed-data into the node
-          const oembed = await (await fetch(`${endpoint.url.replace(/\{format\}/g, 'json')}?url=${node.value}`)).json()
-          if (oembed) {
-            const hast = fromParse5(parseFragment(oembed.html), tree)
-            // TODO: this is the embed HTML. What do I do with it?
-            console.log(JSON.stringify(hast, null, 2))
-          }
+          pairs.push([parent, endpoint, url])
+          return SKIP
         }
       }
+    })
+
+    // get info from provider for embed, and swap children out for that
+    await Promise.all(pairs.map(async ([element, endpoint, url]) => {
+      const oembed = await (await fetch(`${endpoint.url.replace(/\{format\}/g, 'json')}?url=${url}`)).json()
+      if (oembed) {
+        element.children = fromParse5(parseFragment(oembed.html), tree).children
+      }
     }))
+
     return tree
   }
 }

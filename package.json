@@ -1,45 +1,47 @@
 {
-  "name": "remark-oembed",
+  "name": "@konsumer/rehype-oembed",
   "version": "0.0.0",
-  "description": "Remark plugin to embed many links to replace links to content with embeds",
+  "description": "Rehype plugin to embed many links to replace links to content with embeds",
   "type": "module",
   "source": "index.js",
-  "exports": "dist/remark-oembed.modern.js",
-  "main": "dist/remark-oembed.cjs",
-  "module": "dist/remark-oembed.module.js",
-  "unpkg": "dist/remark-oembed.umd.js",
+  "exports": "dist/rehype-oembed.modern.js",
+  "main": "dist/rehype-oembed.cjs",
+  "module": "dist/rehype-oembed.module.js",
+  "unpkg": "dist/rehype-oembed.umd.js",
   "scripts": {
     "test": "NODE_OPTIONS='--no-warnings --experimental-vm-modules' npx jest",
     "build": "microbundle",
-    "get:providers": "node tools/get_providers.js"
+    "get:providers": "node tools/get_providers.js",
+    "prepublishOnly": "npm run build"
   },
   "keywords": [],
   "author": "David Konsumer <konsumer@jetboystudio.com>",
   "license": "MIT",
   "devDependencies": {
     "microbundle": "^0.13.3",
-    "remark": "^14.0.1",
-    "remark-parse": "^10.0.0"
+    "remark-gfm": "^2.0.0",
+    "remark-parse": "^10.0.0",
+    "to-vfile": "^7.2.2",
+    "unified": "^10.1.0",
+    "vfile-reporter": "^7.0.2"
   },
   "dependencies": {
     "escape-string-regexp": "^5.0.0",
     "hast-util-from-parse5": "^7.1.0",
     "isomorphic-fetch": "^3.0.0",
     "parse5": "^6.0.1",
-    "unist-util-select": "^4.0.0",
-    "valid-url": "^1.0.9"
-  },
-  "peerDepedencies": {
-    "remark": "^14.0.1"
+    "rehype-stringify": "^9.0.1",
+    "remark-rehype": "^9.0.0",
+    "unist-util-visit": "^4.0.0"
   },
   "files": [
-    "dist/remark-oembed.umd.js",
-    "dist/remark-oembed.modern.js.map",
-    "dist/remark-oembed.cjs",
-    "dist/remark-oembed.modern.js",
-    "dist/remark-oembed.module.js",
-    "dist/remark-oembed.module.js.map",
-    "dist/remark-oembed.umd.js.map",
-    "dist/remark-oembed.cjs.map"
+    "dist/rehype-oembed.umd.js",
+    "dist/rehype-oembed.modern.js.map",
+    "dist/rehype-oembed.cjs",
+    "dist/rehype-oembed.modern.js",
+    "dist/rehype-oembed.module.js",
+    "dist/rehype-oembed.module.js.map",
+    "dist/rehype-oembed.umd.js.map",
+    "dist/rehype-oembed.cjs.map"
   ]
 }

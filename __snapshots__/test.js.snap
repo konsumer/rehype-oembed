@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`full doc 1`] = `
+"<h2>Twitter</h2>
+<p>This is a tweet:</p>
+<p><blockquote class=\\"twitter-tweet\\"><p lang=\\"en\\" dir=\\"ltr\\">bad children are sent down \\"the slide of no return\\" <a href=\\"https://t.co/GLxna9yeVT\\">pic.twitter.com/GLxna9yeVT</a></p>— Lil Bit 🌈 (@LizerReal) <a href=\\"https://twitter.com/LizerReal/status/1430945065334104065?ref_src=twsrc%5Etfw\\">August 26, 2021</a></blockquote>
+<script async src=\\"https://platform.twitter.com/widgets.js\\" charset=\\"utf-8\\"></script>
+</p>
+<p>This is another tweet:</p>
+<p><blockquote class=\\"twitter-tweet\\"><p lang=\\"en\\" dir=\\"ltr\\">6YO: Can I eat a cookie?<br><br>Me: Finish your dinner first<br><br>6YO: My stomach is full except for a circle shaped space</p>— Vinod Chhaproo (@Chhapiness) <a href=\\"https://twitter.com/Chhapiness/status/1422326068917284869?ref_src=twsrc%5Etfw\\">August 2, 2021</a></blockquote>
+<script async src=\\"https://platform.twitter.com/widgets.js\\" charset=\\"utf-8\\"></script>
+</p>
+<h2>Youtube</h2>
+<p>This is a youtube video:</p>
+<p><iframe width=\\"200\\" height=\\"150\\" src=\\"https://www.youtube.com/embed/K-281doxOMc?feature=oembed\\" frameborder=\\"0\\" allow=\\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\\" allowfullscreen></iframe></p>
+<p><a href=\\"https://www.youtube.com/watch?v=K-281doxOMc\\">this should not match</a></p>
+<p>And neither should this: <a href=\\"https://www.youtube.com/watch?v=K-281doxOMc\\">https://www.youtube.com/watch?v=K-281doxOMc</a></p>"
+`;
